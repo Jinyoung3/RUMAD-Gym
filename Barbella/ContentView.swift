@@ -53,7 +53,6 @@ struct ContentView: View {
                         EmptyView()
                         Spacer()
                     }
-                
                     NavigationLink(destination: SignUp()){
                         Text("Sign Up")
                             .foregroundColor(.white)
@@ -61,13 +60,12 @@ struct ContentView: View {
                             .background(Color.red)
                             .cornerRadius(10)
                     }
-//                    NavigationLink(destination:SignView(), isActive: $isShowingDetailView){
-//                        EmptyView()
 //                    }
                 }.navigationTitle("Sign Up")
             }
             .navigationBarHidden(true)
         }
+        
         
     }
     struct SignView: View {

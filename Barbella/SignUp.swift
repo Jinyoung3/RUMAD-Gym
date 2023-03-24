@@ -32,6 +32,13 @@ struct SignUp: View {
             .frame(width: 300, height: 50)
             .background(Color.black.opacity(0.05))
             .cornerRadius(10)
+        NavigationLink(destination: SignUp()){
+            Text("Sign Up")
+                .foregroundColor(.white)
+                .frame(width:300, height:50)
+                .background(Color.red)
+                .cornerRadius(10)
+        }
         
         
     }
