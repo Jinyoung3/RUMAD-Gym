@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ContentView: View {
-    @State private var username = ""
+    @State private var email = ""
     @State private var password = ""
     @State private var wrongUsername = 0
     @State private var wrongPassword = 0
@@ -30,7 +31,7 @@ struct ContentView: View {
                         .font(.largeTitle)
                         .bold()
                         .padding()
-                    TextField("Username", text: $username)
+                    TextField("Username", text: $email)
                         .padding()
                         .frame(width: 300, height: 50)
                         .background(Color.black.opacity(0.05))
@@ -42,14 +43,15 @@ struct ContentView: View {
                         .background(Color.black.opacity(0.05))
                         .cornerRadius(10)
                         .border(.red, width:CGFloat(wrongPassword))
-                    Button("Log In"){
-                        autheticateUser(username: username, password: password)
+                    Button("Login"){
+                        //register(email: email, password: password)
+                        login(email: email, password: password)
                     }
                     .foregroundColor(.white)
                     .frame(width:300, height:50)
                     .background(Color.blue)
                     .cornerRadius(10)
-                    NavigationLink(destination: Text("You are logged in @\(username)"),isActive: $showingLoginScreen){
+                    NavigationLink(destination: Text("You are logged in @\(email)"),isActive: $showingLoginScreen){
                         EmptyView()
                         Spacer()
                     }
@@ -80,21 +82,38 @@ struct ContentView: View {
         }
     }
     
-    func autheticateUser(username:String, password:String){
-        if username.lowercased() == "poopyhead"{
-            wrongUsername=0
-            if password.lowercased()=="abc123"{
-                wrongPassword=0
-                showingLoginScreen=true
+    func login(email:String, password:String){
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            if error != nil {
+                showingLoginScreen = true
+                print(error!.localizedDescription)
             }
-            else{
-                wrongPassword=2
-            }
-        }
-        else{
-            wrongUsername=2
         }
     }
+    
+//    func register(email:String, password:String) {
+//        Auth.auth().createUser(withEmail: email, password: password) {result, error in
+//            if error != nil {
+//                print(error!.localizedDescription)
+//            }
+//        }
+//    }
+    
+//    func autheticateUser(username:String, password:String){
+//        if username.lowercased() == "poopyhead"{
+//            wrongUsername=0
+//            if password.lowercased()=="abc123"{
+//                wrongPassword=0
+//                showingLoginScreen=true
+//            }
+//            else{
+//                wrongPassword=2
+//            }
+//        }
+//        else{
+//            wrongUsername=2
+//        }
+//    }
 }
 
 struct ContentView_Previews: PreviewProvider {
